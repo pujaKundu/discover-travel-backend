@@ -19,7 +19,18 @@ const client = new MongoClient(uri, {
 async function run() {
   try {
     await client.connect();
-    console.log("Discover travel server is running");
+    console.log("Discover travel databse is running");
+
+    //create database and collection
+    const database = client.db("discoverTravelDb");
+    const servicesCollection = database.collection("services");
+
+    //Get services api
+    app.get("/services", async (req, res) => {
+      const cursor = servicesCollection.find({});
+      const services = await cursor.toArray();
+      res.send(services);
+    });
   } finally {
     //await client.close();
   }
