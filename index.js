@@ -43,11 +43,12 @@ async function run() {
       res.send(results);
     });
 
-    app.post("/orders", async (req, res) => {
-      const order = req.body;
-      const result = await ordersCollection.insertOne(order);
-      res.json(result);
-    });
+    // app.post("/orders", async (req, res) => {
+    //   const order = req.body;
+    //   console.log(order);
+    //   const result = await ordersCollection.insertOne(order);
+    //   res.json(result);
+    // });
   } finally {
     //await client.close();
   }
