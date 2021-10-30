@@ -52,6 +52,13 @@ async function run() {
       // res.send("post hitted");
       //console.log(result);
     });
+
+    //get posted orders
+    app.get("/userOrders", async (req, res) => {
+      const cursor = ordersCollection.find({});
+      const orders = await cursor.toArray();
+      res.send(orders);
+    });
   } finally {
     //await client.close();
   }
