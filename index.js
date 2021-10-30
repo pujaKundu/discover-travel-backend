@@ -59,6 +59,27 @@ async function run() {
       const orders = await cursor.toArray();
       res.send(orders);
     });
+    //get single order
+    app.get("/userOrders/:id", async (req, res) => {
+      const id = req.params.id;
+      console.log("Hitting id", id);
+      const query = { _id: ObjectId(id) };
+      const results = await ordersCollection.findOne(query);
+      res.send(results);
+    });
+    //delete api
+    app.delete("/userOrders/:id", async (req, res) => {
+      const id = req.params.id;
+      console.log("deleted", id);
+      const query = { _id: ObjectId(id) };
+      const result = await ordersCollection.deleteOne(query);
+      res.json(result);
+    });
+    //get orders by email api
+    // app.get("/userOrders/:userEmail", async (req, res) => {
+    //   const email = req.params;
+    //   console.log("Hitting email", email);
+    // });
   } finally {
     //await client.close();
   }
