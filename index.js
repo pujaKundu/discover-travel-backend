@@ -25,6 +25,7 @@ async function run() {
     //create database and collection
     const database = client.db("discoverTravelDb");
     const servicesCollection = database.collection("services");
+    const ordersCollection = database.collection("orders");
 
     //Get services api
     app.get("/services", async (req, res) => {
@@ -40,6 +41,12 @@ async function run() {
       const query = { _id: ObjectId(id) };
       const results = await servicesCollection.findOne(query);
       res.send(results);
+    });
+
+    app.post("/orders", async (req, res) => {
+      const order = req.body;
+      const result = await ordersCollection.insertOne(order);
+      res.json(result);
     });
   } finally {
     //await client.close();
