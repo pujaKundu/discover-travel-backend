@@ -60,6 +60,7 @@ async function run() {
       // res.send("post hitted");
       //console.log(result);
     });
+    //update
 
     //get posted orders
     app.get("/userOrders", async (req, res) => {
@@ -81,6 +82,25 @@ async function run() {
       console.log("deleted", id);
       const query = { _id: ObjectId(id) };
       const result = await ordersCollection.deleteOne(query);
+      res.json(result);
+    });
+    //UPDATE API
+    app.put("/userOrders/:id", async (req, res) => {
+      const id = req.params.id;
+      const updatedOrder = req.body;
+      const filter = { _id: ObjectId(id) };
+      const options = { upsert: true };
+      const updateDoc = {
+        $set: {
+          state: updatedOrder.state,
+        },
+      };
+      const result = await ordersCollection.updateOne(
+        filter,
+        updateDoc,
+        options
+      );
+      console.log("updating", id);
       res.json(result);
     });
     //get orders by email api
