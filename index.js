@@ -43,6 +43,14 @@ async function run() {
       res.send(results);
     });
 
+    //post services
+    app.post("/destinations", async (req, res) => {
+      const destination = req.body;
+      console.log("destination hitted", destination);
+      const result = await servicesCollection.insertOne(destination);
+      res.send(result);
+    });
+
     app.post("/orders", async (req, res) => {
       const order = req.body;
       console.log(order);
